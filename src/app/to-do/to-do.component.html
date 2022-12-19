@@ -1,0 +1,26 @@
+<div class="container">
+    <form #addToDo="ngForm" (ngSubmit)="addTask(addToDo)" class="form-group mt-4">
+        <h1>Add Tasks...</h1>
+        <input type="text" name="Task" placeholder="Add todo items here..." class="form-control mb-2" required ngModel>
+        <button type="submit" class="btn btn-primary" [disabled]="!addToDo.valid">Add task</button>
+    </form>
+    <div class="row">
+        <div class="mt-4 col-8">
+            <h3>Things ToDo:</h3>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let task of tasksArray">
+                  <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}" (change)="editTask($event)">
+                  <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
+                </li>
+            </ul>
+        </div>
+        <div class="mt-4 col-4">
+            <h3>Completed Tasks:</h3>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let task of completedTasksArray">
+                  {{task.Task}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
