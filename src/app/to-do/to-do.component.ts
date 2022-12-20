@@ -9,6 +9,8 @@ import { NgForm } from '@angular/forms';
 export class ToDoComponent {
   tasksArray: any[] = []
   completedTasksArray: any[] = []
+  priority:string = ''
+  borderColor:string = ''
 
   addTask(form: NgForm){
     let task = {
@@ -17,6 +19,8 @@ export class ToDoComponent {
     }
     this.tasksArray.push(task)
     form.resetForm()
+    this.priority = ''
+    this.borderColor = ''
   }
 
   editTask(event: any){
@@ -28,6 +32,27 @@ export class ToDoComponent {
     }
   }
 
+  changePriority(){
+    console.log(this.priority)
+    switch(this.priority){
+      case 'High':{
+        this.borderColor = 'red'
+        break
+      }
+      case 'Medium':{
+        this.borderColor = 'orange'
+        break
+      }
+      case 'Low':{
+        this.borderColor = 'yellow'
+        break
+      }
+      default : {
+        this.borderColor = 'black'
+        break
+      }
+    }
+  }
 
 
 }

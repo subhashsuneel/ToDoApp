@@ -1,26 +1,54 @@
 <div class="container">
     <form #addToDo="ngForm" (ngSubmit)="addTask(addToDo)" class="form-group mt-4">
-        <h1>Add Tasks...</h1>
-        <input type="text" name="Task" placeholder="Add todo items here..." class="form-control mb-2" required ngModel>
+        <h1>ToDo</h1>
+        <input type="text" name="Task" placeholder="+ Add Tasks here..." class="form-control mb-2" required ngModel>
+        <div class="dropdown" style="display: inline;">
+            <!-- This span acts a Add priority button -->
+            <span 
+                class="priority-button m-3" 
+                id="dropdownMenuButton1" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
+                (change)="changePriority()"
+            >
+                <span [ngSwitch]="priority">
+                    <span *ngSwitchCase="'High'"><span style="color: red;">!!!</span> High Priority</span>
+                    <span *ngSwitchCase="'Medium'"><span style="color: red;">!!</span> Medium Priority</span>
+                    <span *ngSwitchCase="'Low'"><span style="color: red;">!</span> Low Priority</span>
+                    <span *ngSwitchCase="'No'">! No Priority</span>
+                    <span *ngSwitchDefault><i class="bi bi-exclamation-lg"></i>Add priority</span>
+                </span>
+            </span>
+            <!-- This is the dropdown menu that appears on click of Add priority span -->
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" (click)="priority = 'High'"><span style="color: red;">!!!</span> High Priority</a></li>
+                <li><a class="dropdown-item" (click)="priority = 'Medium'"><span style="color: red;">!!</span> Medium Priority</a></li>
+                <li><a class="dropdown-item" (click)="priority = 'Low'"><span style="color: red;">!</span> Low Priority</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" (click)="priority = 'No'">! No Priority</a></li>
+            </ul>
+        </div>
+        <div class="dropdown" style="display: inline;">
+            <span class="calendar-button m-3" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-calendar2-check"></i> Date</span>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item"><i class="bi bi-brightness-high" style="color: #0d6efd;"></i>  Today</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-brightness-alt-low-fill" style="color: #0d6efd;"></i>  Tomorrow</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-calendar-range" style="color: #0d6efd;"></i>  Next Week</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-calendar3" style="color: #0d6efd;"></i>  Next Month</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item"><i class="bi bi-calendar2-event" style="color: #0d6efd;"></i>  Custom Date</a></li>
+            </ul>
+        </div>
         <button type="submit" class="btn btn-primary" [disabled]="!addToDo.valid">Add task</button>
     </form>
-    <div class="row">
-        <div class="mt-4 col-8">
-            <h3>Things ToDo:</h3>
-            <ul class="list-group">
-                <li class="list-group-item" *ngFor="let task of tasksArray">
-                  <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}" (change)="editTask($event)">
-                  <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
-                </li>
-            </ul>
-        </div>
-        <div class="mt-4 col-4">
-            <h3>Completed Tasks:</h3>
-            <ul class="list-group">
-                <li class="list-group-item" *ngFor="let task of completedTasksArray">
-                  {{task.Task}}
-                </li>
-            </ul>
-        </div>
+    <div class="mt-4">
+        <p><b><i class="bi bi-chevron-down"></i> Today</b></p>
+        <!-- These are List of Tasks that appers on Today -->
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let task of tasksArray" [style.border-left]="'5px solid ' + borderColor">
+                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}" (change)="editTask($event)">
+                <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
+            </li>
+        </ul>
     </div>
 </div>

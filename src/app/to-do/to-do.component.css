@@ -1,0 +1,4 @@
+.priority-button:hover, .calendar-button:hover{
+    cursor: pointer;
+    color: #0d6efd;
+}
