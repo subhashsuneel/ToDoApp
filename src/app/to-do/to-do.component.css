@@ -1,4 +1,47 @@
+.task-list{
+    padding: 10px;
+    margin: 10px 0px;
+}
 .priority-button:hover, .calendar-button:hover{
     cursor: pointer;
     color: #0d6efd;
+}
+.priority-color{
+    color:red;
+}
+.date-color{
+    color:#0d6efd;
+}
+.HPtask-count{
+    background-color: red;
+    color:white;
+    border-radius: 50%;
+    padding:3px 10px;
+    opacity: 60%;
+}
+.MPtask-count{
+    background-color: red;
+    color:white;
+    border-radius: 50%;
+    padding:3px 10px;
+    opacity: 50%;
+}
+.LPtask-count{
+    background-color: red;
+    color:white;
+    border-radius: 50%;
+    padding:3px 10px;
+    opacity: 30%;
+}
+.NPtask-count{
+    background-color: black;
+    color:white;
+    border-radius: 50%;
+    padding:3px 10px;
+    opacity: 30%;
+}
+.date-time{
+    font-size: smaller;
+    font-weight: lighter;
+    float: right;
 }

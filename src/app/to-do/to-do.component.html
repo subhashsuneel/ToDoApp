@@ -9,21 +9,20 @@
                 id="dropdownMenuButton1" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false"
-                (change)="changePriority()"
             >
                 <span [ngSwitch]="priority">
-                    <span *ngSwitchCase="'High'"><span style="color: red;">!!!</span> High Priority</span>
-                    <span *ngSwitchCase="'Medium'"><span style="color: red;">!!</span> Medium Priority</span>
-                    <span *ngSwitchCase="'Low'"><span style="color: red;">!</span> Low Priority</span>
+                    <span *ngSwitchCase="'High'"><span class="priority-color">!!!</span> High Priority</span>
+                    <span *ngSwitchCase="'Medium'"><span class="priority-color">!!</span> Medium Priority</span>
+                    <span *ngSwitchCase="'Low'"><span class="priority-color">!</span> Low Priority</span>
                     <span *ngSwitchCase="'No'">! No Priority</span>
                     <span *ngSwitchDefault><i class="bi bi-exclamation-lg"></i>Add priority</span>
                 </span>
             </span>
             <!-- This is the dropdown menu that appears on click of Add priority span -->
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" (click)="priority = 'High'"><span style="color: red;">!!!</span> High Priority</a></li>
-                <li><a class="dropdown-item" (click)="priority = 'Medium'"><span style="color: red;">!!</span> Medium Priority</a></li>
-                <li><a class="dropdown-item" (click)="priority = 'Low'"><span style="color: red;">!</span> Low Priority</a></li>
+                <li><a class="dropdown-item" (click)="priority = 'High'"><span class="priority-color">!!!</span> High Priority</a></li>
+                <li><a class="dropdown-item" (click)="priority = 'Medium'"><span class="priority-color">!!</span> Medium Priority</a></li>
+                <li><a class="dropdown-item" (click)="priority = 'Low'"><span class="priority-color">!</span> Low Priority</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" (click)="priority = 'No'">! No Priority</a></li>
             </ul>
@@ -31,23 +30,86 @@
         <div class="dropdown" style="display: inline;">
             <span class="calendar-button m-3" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-calendar2-check"></i> Date</span>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item"><i class="bi bi-brightness-high" style="color: #0d6efd;"></i>  Today</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-brightness-alt-low-fill" style="color: #0d6efd;"></i>  Tomorrow</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-calendar-range" style="color: #0d6efd;"></i>  Next Week</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-calendar3" style="color: #0d6efd;"></i>  Next Month</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-brightness-high date-color" ></i>  Today</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-brightness-alt-low-fill date-color" ></i>  Tomorrow</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-calendar-range date-color" ></i>  Next Week</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-calendar3 date-color" ></i>  Next Month</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item"><i class="bi bi-calendar2-event" style="color: #0d6efd;"></i>  Custom Date</a></li>
+                <li><a class="dropdown-item"><i class="bi bi-calendar2-event date-color" ></i>  Some Day</a></li>
             </ul>
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="!addToDo.valid">Add task</button>
     </form>
-    <div class="mt-4">
-        <p><b><i class="bi bi-chevron-down"></i> Today</b></p>
+    <nav class="navbar navbar-expand-lg bg-light mt-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="bi bi-infinity date-color"></i> All</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#"><i class="bi bi-brightness-high date-color" ></i>  Today</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="bi bi-brightness-alt-low-fill date-color" ></i>  Tomorrow</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="bi bi-calendar-range date-color" ></i>  Next Week</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"><i class="bi bi-calendar3 date-color" ></i>  Next Month</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"><i class="bi bi-calendar2-event date-color" ></i> Some Day</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="mt-4" class="task-list">
+        <p><b><span class="priority-color">!!!</span> High Priority <span class="HPtask-count">{{HPtasksArray.length}}</span></b> <i class="bi bi-chevron-down" style="float: right;"></i></p>
         <!-- These are List of Tasks that appers on Today -->
         <ul class="list-group">
-            <li class="list-group-item" *ngFor="let task of tasksArray" [style.border-left]="'5px solid ' + borderColor">
-                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}" (change)="editTask($event)">
+            <li class="list-group-item" *ngFor="let task of HPtasksArray" style="border-left: 5px solid red;">
+                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}">
                 <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
+                <span class="date-time">{{formatDate(task.time)}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="mt-4" class="task-list">
+        <p><b><span class="priority-color">!!</span> Medium Priority <span class="MPtask-count">{{MPtasksArray.length}}</span> <i class="bi bi-chevron-down" style="float: right;"></i></b></p>
+        <!-- These are List of Tasks that appers on Today -->
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let task of MPtasksArray" style="border-left: 5px solid orange;">
+                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}">
+                <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
+                <span class="date-time">{{formatDate(task.time)}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="mt-4" class="task-list">
+        <p><b><span class="priority-color">!</span> Low Priority <span class="LPtask-count">{{LPtasksArray.length}}</span> <i class="bi bi-chevron-down" style="float: right;"></i></b></p>
+        <!-- These are List of Tasks that appers on Today -->
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let task of LPtasksArray" style="border-left: 5px solid yellow;">
+                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}">
+                <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
+                <span class="date-time">{{formatDate(task.time)}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="mt-4" class="task-list">
+        <p><b>! No Priority <span class="NPtask-count">{{NPtasksArray.length}}</span> <i class="bi bi-chevron-down"
+                    style="float: right;"></i></b></p>
+        <!-- These are List of Tasks that appers on Today -->
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let task of NPtasksArray" style="border-left: 5px solid;">
+                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}"
+                    name="{{task.id}}">
+                <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
+                <span class="date-time">{{formatDate(task.time)}}</span>
             </li>
         </ul>
     </div>
