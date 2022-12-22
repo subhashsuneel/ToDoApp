@@ -28,88 +28,67 @@
             </ul>
         </div>
         <div class="dropdown" style="display: inline;">
-            <span class="calendar-button m-3" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-calendar2-check"></i> Date</span>
+            <span 
+                class="calendar-button m-3" 
+                id="dropdownMenuButton1" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
+                >
+                <span [ngSwitch]="when">
+                    <span *ngSwitchCase="'Today'"><i class="bi bi-brightness-high date-color"></i> Today</span>
+                    <span *ngSwitchCase="'Tomorrow'"><i class="bi bi-brightness-alt-low-fill date-color"></i> Tomorrow</span>
+                    <span *ngSwitchCase="'Next Week'"><i class="bi bi-calendar-range date-color"></i> Next Week</span>
+                    <span *ngSwitchCase="'Next Month'"><i class="bi bi-calendar3 date-color"></i> Next Month</span>
+                    <span *ngSwitchCase="'Some Day'"><i class="bi bi-calendar2-event date-color"></i> Some Day</span>
+                    <span *ngSwitchDefault><i class="bi bi-brightness-high date-color"></i> Today</span>
+                </span>
+            </span>
+            
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item"><i class="bi bi-brightness-high date-color" ></i>  Today</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-brightness-alt-low-fill date-color" ></i>  Tomorrow</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-calendar-range date-color" ></i>  Next Week</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-calendar3 date-color" ></i>  Next Month</a></li>
+                <li><a class="dropdown-item" (click)="when = 'Today'"><i class="bi bi-brightness-high date-color" ></i>  Today</a></li>
+                <li><a class="dropdown-item" (click)="when = 'Tomorrow'"><i class="bi bi-brightness-alt-low-fill date-color" ></i>  Tomorrow</a></li>
+                <li><a class="dropdown-item" (click)="when = 'Next Week'"><i class="bi bi-calendar-range date-color" ></i>  Next Week</a></li>
+                <li><a class="dropdown-item" (click)="when = 'Next Month'"><i class="bi bi-calendar3 date-color" ></i>  Next Month</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item"><i class="bi bi-calendar2-event date-color" ></i>  Some Day</a></li>
+                <li><a class="dropdown-item" (click)="when = 'Some Day'"><i class="bi bi-calendar2-event date-color" ></i>  Some Day</a></li>
             </ul>
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="!addToDo.valid">Add task</button>
     </form>
-    <nav class="navbar navbar-expand-lg bg-light mt-4">
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark mt-4">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"><i class="bi bi-infinity date-color"></i> All</a>
+          <a class="navbar-brand text-white" (click)="showByDate = 'All'"><i class="bi bi-infinity date-color"></i> All</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#"><i class="bi bi-brightness-high date-color" ></i>  Today</a>
+                <a class="nav-link" (click)="showByDate = 'Today'"><i class="bi bi-brightness-high date-color" ></i>  Today</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-brightness-alt-low-fill date-color" ></i>  Tomorrow</a>
+                <a class="nav-link" (click)="showByDate = 'Tomorrow'"><i class="bi bi-brightness-alt-low-fill date-color" ></i>  Tomorrow</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-calendar-range date-color" ></i>  Next Week</a>
+                <a class="nav-link" (click)="showByDate = 'Next Week'"><i class="bi bi-calendar-range date-color" ></i>  Next Week</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link"><i class="bi bi-calendar3 date-color" ></i>  Next Month</a>
+                <a class="nav-link" (click)="showByDate = 'Next Month'"><i class="bi bi-calendar3 date-color" ></i>  Next Month</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link"><i class="bi bi-calendar2-event date-color" ></i> Some Day</a>
+                <a class="nav-link" (click)="showByDate = 'Some Day'"><i class="bi bi-calendar2-event date-color" ></i> Some Day</a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
     <div class="mt-4" class="task-list">
-        <p><b><span class="priority-color">!!!</span> High Priority <span class="HPtask-count">{{HPtasksArray.length}}</span></b> <i class="bi bi-chevron-down" style="float: right;"></i></p>
-        <!-- These are List of Tasks that appers on Today -->
         <ul class="list-group">
-            <li class="list-group-item" *ngFor="let task of HPtasksArray" style="border-left: 5px solid red;">
-                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}">
-                <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
-                <span class="date-time">{{formatDate(task.time)}}</span>
-            </li>
-        </ul>
-    </div>
-    <div class="mt-4" class="task-list">
-        <p><b><span class="priority-color">!!</span> Medium Priority <span class="MPtask-count">{{MPtasksArray.length}}</span> <i class="bi bi-chevron-down" style="float: right;"></i></b></p>
-        <!-- These are List of Tasks that appers on Today -->
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let task of MPtasksArray" style="border-left: 5px solid orange;">
-                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}">
-                <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
-                <span class="date-time">{{formatDate(task.time)}}</span>
-            </li>
-        </ul>
-    </div>
-    <div class="mt-4" class="task-list">
-        <p><b><span class="priority-color">!</span> Low Priority <span class="LPtask-count">{{LPtasksArray.length}}</span> <i class="bi bi-chevron-down" style="float: right;"></i></b></p>
-        <!-- These are List of Tasks that appers on Today -->
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let task of LPtasksArray" style="border-left: 5px solid yellow;">
-                <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}" name="{{task.id}}">
-                <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
-                <span class="date-time">{{formatDate(task.time)}}</span>
-            </li>
-        </ul>
-    </div>
-    <div class="mt-4" class="task-list">
-        <p><b>! No Priority <span class="NPtask-count">{{NPtasksArray.length}}</span> <i class="bi bi-chevron-down"
-                    style="float: right;"></i></b></p>
-        <!-- These are List of Tasks that appers on Today -->
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let task of NPtasksArray" style="border-left: 5px solid;">
+            <li class="list-group-item" *ngFor="let task of whichArray(showByDate)" [ngStyle]="{'border-left': '5px solid ' + task.color}">
                 <input class="form-check-input me-1" type="checkbox" value="{{task.id}}" id="{{task.id}}"
-                    name="{{task.id}}">
+                    name="{{task.id}}" (change)="editTask($event)">
                 <label class="form-check-label stretched-link" for="{{task.id}}">{{task.Task}}</label>
-                <span class="date-time">{{formatDate(task.time)}}</span>
+                <span class="due-date"><i class="bi bi-calendar"></i> {{task.dueDate}}</span>
             </li>
         </ul>
     </div>

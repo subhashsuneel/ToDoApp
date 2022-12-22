@@ -7,133 +7,95 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./to-do.component.css']
 })
 export class ToDoComponent {
-  HPtasksArray: any[] = []
-  MPtasksArray: any[] = []
-  LPtasksArray: any[] = []
-  NPtasksArray: any[] = []
-  completedTasksArray: any[] = []
-  priority:string = ''
+  tasksArray: any[] = []
+  today: any[] = []
+  tomorrow: any[] = []
+  nextWeek: any[] = []
+  nextMonth: any[] = []
+  someDay:any[] = []
+  completedTasksArray:any[] = [];
 
-  formatDate(date : Date): string {
-    let dateStr = ''
-    switch(date.getDay()){
-      case 0:
-        dateStr += 'Sunday, '
-        break
-      case 1:
-        dateStr += 'Monday, '
-        break
-      case 2:
-        dateStr += 'Tuesday, '
-        break
-      case 3:
-        dateStr += 'Wednesday, '
-        break
-      case 4:
-        dateStr += 'Thursday, '
-        break
-      case 5:
-        dateStr += 'Friday, '
-        break
-      case 6:
-        dateStr += 'Saturday, '
-        break
+  priority:string = ''
+  when:string ='Today'
+  showByDate:string = 'All'
+
+  getColor(str: string): string{
+    if(str == 'High'){
+      return 'red'
+    }else if(str == 'Medium'){
+      return 'orange'
+    } else if (str == 'Low') {
+      return 'yellow'
+    }
+    return 'black'
+  }
+
+  addTask(form: NgForm){
+    let bgcolor = this.getColor(this.priority)
+    let task = {
+      ...form.value,
+      id: this.tasksArray.length,
+      dueDate :this.when,
+      priority: this.priority,
+      color: bgcolor
+    }
+    this.tasksArray.push(task)
+
+    if(task.dueDate == 'Today'){
+      this.today.push(task)
+    }else if(task.dueDate == 'Tomorrow'){
+      this.tomorrow.push(task)
+    } else if (task.dueDate == 'Next Week') {
+      this.nextWeek.push(task)
+    } else if (task.dueDate == 'Next Month') {
+      this.nextMonth.push(task)
+    } else if (task.dueDate == 'Some Day') {
+      this.someDay.push(task)
+    } 
+
+    form.resetForm()
+    this.priority = ''
+    this.when = 'Today'
+  }
+
+  whichArray(str: string): any[]{
+    if(str == 'Today'){
+      return this.today
+    }else if(str == 'Tomorrow'){
+      return this.tomorrow
+    } else if (str == 'Next Week') {
+      return this.nextWeek
+    } else if (str == 'Next Month') {
+      return this.nextMonth
+    } else if (str == 'Some Day') {
+      return this.someDay
+    }
+    return this.tasksArray
+  }
+  editTask(event: any) {
+    let index = event.target.id
+    if (event.target.checked) {
+      this.completedTasksArray.push(this.tasksArray[index])
+      this.tasksArray.splice(index, 1)
+
+      const todayindex = this.today.findIndex(obj => obj.id == index);
+      const tomorrowindex = this.tomorrow.findIndex(obj => obj.id == index);
+      const nextWeekindex = this.nextWeek.findIndex(obj => obj.id == index);
+      const nextMonthindex = this.nextMonth.findIndex(obj => obj.id == index);
+      const someDayindex = this.someDay.findIndex(obj => obj.id == index);
+      console.log(todayindex, tomorrowindex, nextWeekindex, nextMonthindex, someDayindex)
+      if(todayindex != -1){
+        this.today.splice(todayindex, 1)
+      } else if (tomorrowindex != -1) {
+        this.tomorrow.splice(tomorrowindex, 1)
+      } else if (nextWeekindex != -1) {
+        this.nextWeek.splice(nextWeekindex, 1)
+      } else if (nextMonthindex != -1) {
+        this.nextMonth.splice(nextMonthindex, 1)
+      } else if (someDayindex != -1) {
+        this.someDay.splice(someDayindex, 1)
       }
-    switch(date.getMonth()){
-      case 0 : 
-        dateStr += 'Jan'
-        break
-      case 1 : 
-        dateStr += 'Feb'
-        break
-      case 2:
-        dateStr += 'Mar'
-        break
-      case 3:
-        dateStr += 'Apr'
-        break
-      case 4:
-        dateStr += 'May'
-        break
-      case 5:
-        dateStr += 'Jun'
-        break
-      case 6:
-        dateStr += 'Jul'
-        break
-      case 7:
-        dateStr += 'Aug'
-        break
-      case 8:
-        dateStr += 'Sep'
-        break
-      case 9:
-        dateStr += 'Oct'
-        break
-      case 10:
-        dateStr += 'Nov'
-        break
-      case 11:
-        dateStr += 'Dec'
-        break
     }
-    dateStr += ' '+date.getDate().toString()
-    return dateStr
-  }
-  addTask(form:NgForm){
-    console.log(this.priority)
-    if(this.priority == 'High'){
-      this.addHPTask(form)
-    }else if(this.priority == 'Medium'){
-      this.addMPTask(form)
-    }else if(this.priority == 'Low'){
-      this.addLPTask(form)
-    }else{
-      this.addNPTask(form)
-    }
-  }
-  addNPTask(form: NgForm){
-    const dateTime = new Date();
-    let task = {
-      ...form.value,
-      id: this.NPtasksArray.length + 'N',
-      time: dateTime
-    }
-    this.NPtasksArray.push(task)
-    form.resetForm()
-    this.priority = ''
-  }
-  addHPTask(form: NgForm){
-    const dateTime = new Date();
-    let task = {
-      ...form.value,
-      id: this.HPtasksArray.length + 'H',
-      time: dateTime
-    }
-    this.HPtasksArray.push(task)
-    form.resetForm()
-    this.priority = ''
-  }
-  addMPTask(form: NgForm){
-    const dateTime = new Date();
-    let task = {
-      ...form.value,
-      id: this.MPtasksArray.length + 'M',
-      time: dateTime
-    }
-    this.MPtasksArray.push(task)
-    form.resetForm()
-    this.priority = ''
-  }
-  addLPTask(form: NgForm){
-    const dateTime = new Date();
-    let task = {
-      ...form.value,
-      id: this.LPtasksArray.length + 'L',
-      time: dateTime
-    }
-    this.LPtasksArray.push(task)
-    form.resetForm()
-    this.priority = ''
+    console.log(this.completedTasksArray)
   }
 }
