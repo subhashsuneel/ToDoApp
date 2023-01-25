@@ -1,0 +1,27 @@
+<h2 class="text-center">How do you want to focus? </h2>
+<ul>
+    <li><a (click)="onPomo()" [ngClass]="pomo ? 'active' : ''">Pomo</a></li>
+    <li><a (click)="onSw()" [ngClass]="sw ? 'active' : ''">Stop Watch</a></li>
+</ul>
+<div class="pomo"  *ngIf="pomo">
+    <div *ngIf="!timerComplete">
+        {{ minutes }}:{{ seconds }}
+    </div>
+    <div *ngIf="timerComplete">
+        Timer complete!
+    </div>
+    <button *ngIf="!timerStarted" (click)="startTimer()" class="btn btn-primary">Start</button>
+    <button *ngIf="timerStarted" (click)="stopTimer()" class="btn btn-danger">Stop</button>
+</div>
+
+<div class="stop-watch" *ngIf="sw">
+    <div *ngIf="!stopwatchComplete">
+        {{ swMinutes }}:{{ swSeconds }}:{{ milliseconds }}
+    </div>
+    <div *ngIf="stopwatchComplete">
+        Stopwatch complete!
+    </div>
+    <button *ngIf="!stopwatchStarted" (click)="startStopwatch()" class="btn btn-primary" >Start</button>
+    <button *ngIf="stopwatchStarted" (click)="stopStopwatch()" class="btn btn-danger">Stop</button>
+</div>
+
