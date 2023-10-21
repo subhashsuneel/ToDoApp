@@ -9,18 +9,9 @@ import { ToDoComponent } from './to-do/to-do.component';
 import { FocusComponent } from './focus/focus.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ToDoComponent,
-    HeaderComponent,
-    FocusComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent, ToDoComponent, HeaderComponent, FocusComponent],
+  imports: [BrowserModule, FormsModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

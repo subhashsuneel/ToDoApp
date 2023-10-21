@@ -3,20 +3,20 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-focus',
   templateUrl: './focus.component.html',
-  styleUrls: ['./focus.component.css']
+  styleUrls: ['./focus.component.css'],
 })
 export class FocusComponent {
-  pomo: boolean = true
-  sw: boolean = false
+  pomo: boolean = true;
+  sw: boolean = false;
 
-  onPomo(){
-    this.pomo = !this.pomo
-    this.sw = false
+  onPomo() {
+    this.pomo = !this.pomo;
+    this.sw = false;
   }
 
-  onSw(){
-    this.sw = !this.sw
-    this.pomo = false
+  onSw() {
+    this.sw = !this.sw;
+    this.pomo = false;
   }
 
   minutes = 25;
@@ -25,14 +25,13 @@ export class FocusComponent {
   timerStarted = false;
   intervalId: string | number | NodeJS.Timer | undefined;
 
-  
   swMinutes = 0;
   swSeconds = 0;
   milliseconds = 0;
   stopwatchStarted = false;
   stopwatchComplete = false;
   swintervalId: string | number | NodeJS.Timer | undefined;
-  
+
   startTimer() {
     this.timerStarted = true;
     this.intervalId = setInterval(() => {
@@ -75,4 +74,3 @@ export class FocusComponent {
     this.stopwatchStarted = false;
   }
 }
-

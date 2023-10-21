@@ -1,20 +1,21 @@
-.task-list{
-    padding: 10px;
-    margin: 10px 0px;
+.task-list {
+  padding: 10px;
+  margin: 10px 0px;
 }
-.priority-button:hover, .calendar-button:hover{
-    cursor: pointer;
-    color: #0d6efd;
+.priority-button:hover,
+.calendar-button:hover {
+  cursor: pointer;
+  color: #0d6efd;
 }
-.priority-color{
-    color:red;
+.priority-color {
+  color: red;
 }
-.date-color{
-    color:#0d6efd;
+.date-color {
+  color: #0d6efd;
 }
-.due-date{
-    font-size: smaller;
-    font-weight: lighter;
-    color: #0d6efd;
-    float: right;
+.due-date {
+  font-size: smaller;
+  font-weight: lighter;
+  color: #0d6efd;
+  float: right;
 }
